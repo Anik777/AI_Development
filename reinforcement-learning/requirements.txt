@@ -1,0 +1,12 @@
+# Shared reinforcement-learning runtime. Install in the documented order in
+# BOX2D_INSTALLATION.md when creating a fresh Python 3.14 environment.
+--extra-index-url https://download.pytorch.org/whl/cu126
+
+numpy==2.5.4
+torch==2.14.0+cu126
+swig==4.5.1
+wheel==0.48.0
+box2d-py==2.3.8
+gymnasium[box2d]==1.4.0
+moviepy==2.2.1
+

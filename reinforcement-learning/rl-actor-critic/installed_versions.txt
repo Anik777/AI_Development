@@ -1,0 +1,8 @@
+The shared environment version journal is maintained at:
+
+  ../versions.txt
+
+This project deliberately uses the single virtual environment at:
+
+  ../.venv
+

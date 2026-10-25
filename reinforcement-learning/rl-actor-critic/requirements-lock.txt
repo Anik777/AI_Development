@@ -1,0 +1,5 @@
+# The human-readable environment record is ../../versions.txt.
+# Generate a complete machine lock after finalizing the environment with:
+#   python -m pip freeze > requirements-lock.txt
+# Do not use this placeholder as an installation manifest.
+

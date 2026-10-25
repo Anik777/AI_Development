@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Generated training artifacts
+runs/*
+!runs/.gitkeep
+logs/*
+!logs/.gitkeep
+checkpoints/*
+!checkpoints/.gitkeep
+

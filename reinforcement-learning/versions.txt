@@ -1,0 +1,153 @@
+Reinforcement Learning Environment - Version Journal
+=====================================================
+
+Environment location:
+  /data/AI_Development/reinforcement-learning/.venv
+
+Last updated:
+  2026-10-25
+
+System and GPU
+--------------
+GPU: NVIDIA GeForce GTX 1060 3GB (Pascal generation)
+NVIDIA driver: 580.178.04
+Maximum CUDA version reported by driver: 13.0
+
+Important compatibility note:
+  The CUDA version shown by nvidia-smi is the newest CUDA runtime supported by
+  the driver; it is not the CUDA toolkit bundled with PyTorch. CUDA 13 no
+  longer supports Pascal libraries/offline compilation. Use the PyTorch CUDA
+  12.6 (cu126) build for this GPU. PyTorch 2.14 is the final release line with
+  published CUDA 12.6 wheels.
+
+Python environment
+------------------
+Python: 3.14.4
+pip: 26.2.2
+
+Installed Python packages
+-------------------------
+box2d-py==2.3.8
+cloudpickle==3.1.2
+cuda-bindings==12.9.7
+cuda-pathfinder==1.6.0
+cuda-toolkit==12.6.3
+decorator==5.3.1
+filelock==3.32.3
+farama-notifications==0.0.6
+fsspec==2026.7.0
+gymnasium==1.4.0
+ImageIO==2.38.1
+imageio-ffmpeg==0.6.0
+Jinja2==3.1.6
+MarkupSafe==3.0.3
+mpmath==1.3.0
+moviepy==2.2.1
+networkx==3.6.1
+numpy==2.5.4
+nvidia-cublas-cu12==12.6.4.1
+nvidia-cuda-cupti-cu12==12.6.80
+nvidia-cuda-nvrtc-cu12==12.6.85
+nvidia-cuda-runtime-cu12==12.6.77
+nvidia-cudnn-cu12==9.10.2.21
+nvidia-cufft-cu12==11.3.0.4
+nvidia-cufile-cu12==1.11.1.6
+nvidia-curand-cu12==10.3.7.77
+nvidia-cusolver-cu12==11.7.1.2
+nvidia-cusparse-cu12==12.5.4.2
+nvidia-cusparselt-cu12==0.7.1
+nvidia-nccl-cu12==2.29.3
+nvidia-nvjitlink-cu12==12.9.86
+nvidia-nvshmem-cu12==3.4.5
+nvidia-nvtx-cu12==12.6.77
+packaging==26.3
+pillow==11.3.0
+pip==26.2.2
+proglog==0.1.12
+pygame-ce==2.5.8
+python-dotenv==1.2.4
+setuptools==78.1.0
+sympy==1.14.0
+swig==4.5.1
+torch==2.14.0+cu126
+triton==3.8.0
+typing_extensions==4.16.0
+wheel==0.48.0
+
+Installation verification
+-------------------------
+PyTorch compiled CUDA runtime: 12.6
+torch.cuda.is_available(): True
+CUDA device count: 1
+CUDA device: NVIDIA GeForce GTX 1060 3GB
+GPU tensor test: Passed ([1, 2, 3] squared to [1, 4, 9])
+NumPy/PyTorch conversion test: Passed
+Box2D import and physics-world construction test: Passed
+LunarLander-v3 creation, reset, and one-step test: Passed
+Seeded LunarLander/action-space reproducibility test: Passed
+Python package dependency consistency (`pip check`): Passed
+Gymnasium RecordVideo MP4 smoke test: Passed
+
+Next dependency
+---------------
+No package is pending for CLI training. JupyterLab is optional and is not
+currently installed; install it only when running the notebook.
+
+Installation history
+--------------------
+2026-10-25: `gymnasium[box2d]` installation was attempted but rolled back.
+Reason: box2d-py needed the `swig` executable during its wheel build, while
+pip had not installed the separately resolved swig package yet. No partial
+Gymnasium/Box2D packages remain in the environment. Install SWIG first, then
+retry the Gymnasium Box2D extra.
+2026-10-25: Installed and verified SWIG 4.5.1 inside the shared virtual
+environment. The missing Box2D build prerequisite is now resolved.
+2026-10-25: The second `gymnasium[box2d]` attempt was also rolled back.
+The Box2D build found the virtual environment's SWIG launcher, but pip's
+isolated build hid the launcher's `swig` Python module. No partial Gymnasium
+packages remain. Next approach: install the local wheel build tool, build
+box2d-py with `--no-build-isolation`, and then install Gymnasium.
+2026-10-25: Installed wheel 0.48.0. It also installed packaging 26.3.
+The reusable environment now has setuptools, wheel, and SWIG available for
+the non-isolated Box2D native build.
+2026-10-25: Successfully built and installed box2d-py 2.3.8 for CPython 3.14
+on Linux x86_64 using `--no-build-isolation`. Verified that the compiled
+extension imports and can create a physics world. Full troubleshooting notes:
+BOX2D_INSTALLATION.md.
+2026-10-25: Installed the remaining `gymnasium[box2d]` packages successfully:
+Gymnasium 1.4.0, pygame-ce 2.5.8, cloudpickle 3.1.2, and
+farama-notifications 0.0.6. Pip correctly reused the separately installed
+box2d-py 2.3.8 and SWIG 4.5.1.
+2026-10-25: Verified LunarLander-v3 through Gymnasium 1.4.0. The environment
+was created, reset with seed 20, and advanced through one Box2D physics step.
+The observation shape was (8,), the action space was Discrete(4), and the step
+returned the expected observation, reward, terminated, truncated, and info
+values.
+2026-10-25: Verified reproducibility with both `env.reset(seed=20)` and
+`env.action_space.seed(20)`. Two independent script runs produced the same
+initial observation, sampled action, next observation, and reward.
+2026-10-25: Installed MoviePy 2.2.1 and its video dependencies. The
+imageio-ffmpeg package provides the FFmpeg integration used for MP4 output.
+`pip check` reported no broken package requirements.
+2026-10-25: Verified end-to-end MP4 recording twice with a seeded random
+LunarLander policy. Each output was 15,370 bytes. FFmpeg 7.0.2 identified the
+latest file as valid H.264 video at 600x400, 50 FPS, with a duration of 1.26
+seconds. The two equal-size outputs provide an additional reproducibility
+check for the fixed environment and action-space seeds.
+2026-10-25: Completed the configurable LunarLander actor-critic implementation.
+Python compilation, notebook JSON validation, Bash syntax validation, CLI
+argument parsing, and all 6 unit tests passed. A 2-episode CPU integration run
+verified per-iteration CSV/JSONL logs, text logs, metadata, configuration
+snapshot, SVG curve, periodic/final checkpoints, deterministic checkpoint
+replay, and 3 evaluation videos. A separate CUDA integration run verified the
+complete forward, backward, gradient-clipping, optimizer, checkpoint, and
+evaluation path on the GTX 1060. The Bash launcher also completed with exit
+status 0 and wrote its shell environment and console logs.
+2026-10-25: Added `iterations.log`, which is line-buffered and flushed after
+every training episode independently of console `log_interval`. The existing
+`training.log` remains the lifecycle/progress/error log created for every run.
+Moved and expanded `repo_structure.md` to the reinforcement-learning root.
+2026-10-25: Added dependency-free SVG plots for training reward, rolling
+reward, actor loss, critic loss, and total loss. Every scheduled/final policy
+evaluation now records all per-step rewards, writes their source CSV, and
+creates immediate and cumulative reward plots matched to the evaluation video.
